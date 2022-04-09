@@ -5,7 +5,5 @@ import hu.bme.aut.ramapp.persistence.AppDatabase
 import javax.inject.Inject
 
 class DetailsRepository @Inject constructor(
-    characterService: CharacterService,
-    appDatabase: AppDatabase
 ) {
 }
