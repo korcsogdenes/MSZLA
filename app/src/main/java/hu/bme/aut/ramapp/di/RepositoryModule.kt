@@ -17,9 +17,10 @@ object RepositoryModule {
     @Provides
     @ViewModelScoped
     fun provideMainRepository(
-        characterService: CharacterService
+        characterService: CharacterService,
+        ratingDao: RatingDao
     ) : MainRepository {
-        return MainRepository(characterService)
+        return MainRepository(characterService, ratingDao)
     }
 
 }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">RaMApp</string>
+    <string name="database">Rating.db</string>
 </resources>

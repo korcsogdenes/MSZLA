@@ -14,7 +14,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         viewModel.testApiAll()
-
+        viewModel.testDbInsert(1,2, "TesztRev1")
+        viewModel.testDbInsert(2,3, "TesztRev2")
+        viewModel.testDbInsert(3,4, "TesztRev3")
+        viewModel.testDbGet(3)
     }
 
 }
