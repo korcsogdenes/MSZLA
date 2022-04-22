@@ -15,7 +15,7 @@ class MainViewModel @Inject constructor(
 
     fun testApiAll(){
         viewModelScope.launch {
-            val res = mainRepository.getCharacters(2)
+            val res = mainRepository.getCharacters(1)
             if(res != null)
                 for (c in res){
                     println(c.name)
