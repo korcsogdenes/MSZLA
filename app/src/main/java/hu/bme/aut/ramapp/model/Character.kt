@@ -15,6 +15,7 @@ data class Character(
     val location: Location,
     @SerializedName("origin")
     val origin: Origin,
+    var rating: Rating?,
     val firstEp: String,
     @SerializedName("episode")
     val episodeList: ArrayList<String>,
