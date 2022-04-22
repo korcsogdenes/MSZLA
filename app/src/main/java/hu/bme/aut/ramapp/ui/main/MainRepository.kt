@@ -10,7 +10,7 @@ class MainRepository @Inject constructor(
 ) {
 
     suspend fun getCharacters(page: Int) : List<Character>? {
-        return characterService.getCharacters(page).body()
+        return characterService.getCharacters(page).body()?.results
     }
 
     suspend fun getCharacter(id: Int): Character? {
