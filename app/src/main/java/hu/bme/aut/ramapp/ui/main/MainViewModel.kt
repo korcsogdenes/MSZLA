@@ -26,14 +26,13 @@ class MainViewModel @Inject constructor(
     fun testApiOne(){
         viewModelScope.launch {
             val res = mainRepository.getCharacter(1)
-            if(res != null)
-                println(res.name)
+            println(res?.name)
         }
     }
 
-    fun testDbInsert(id: Int, cId: Int, rev: String){
+    fun testDbInsert(id: Int, cId: Int, p: Int, rev: String){
         viewModelScope.launch {
-            val r = Rating(id, cId, rev)
+            val r = Rating(id, cId, p, rev)
             mainRepository.saveRating(r)
         }
     }

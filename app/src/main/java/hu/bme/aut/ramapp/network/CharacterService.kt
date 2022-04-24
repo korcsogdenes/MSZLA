@@ -14,7 +14,10 @@ interface CharacterService {
     suspend fun getCharacter(@Path("id") id: Int): Response<Character>
 
     @POST("character/new")
-    suspend fun insertCharacter(@Body character: Character)
+    suspend fun postCharacter(@Body character: Character)
+
+    @PUT("character/update")
+    suspend fun putCharacter(@Body character: Character)
 
     @DELETE("character/delete/{id}")
     suspend fun delCharacter(@Path("id") id: Int)
