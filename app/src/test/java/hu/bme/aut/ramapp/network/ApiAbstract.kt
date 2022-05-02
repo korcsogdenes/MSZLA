@@ -9,11 +9,13 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 import java.nio.charset.StandardCharsets
 
 @RunWith(JUnit4::class)
-abstract class ApiAbstract {
+abstract class ApiAbstract<T> {
 
     lateinit var mockWebServer: MockWebServer
 
@@ -37,12 +39,21 @@ abstract class ApiAbstract {
 
     @Throws(IOException::class)
     private fun enqueueResponse(fileName: String, headers: Map<String, String>) {
-        val inputStream = javaClass.classLoader!!.getResourceAsStream("api-response/characters.json")
-        val source = inputStream.source().buffer()
-        val mockResponse = MockResponse()
-        for ((key, value) in headers) {
-            mockResponse.addHeader(key, value)
+        javaClass.classLoader?.let {
+            val inputStream = it.getResourceAsStream("api-response/${fileName}")
+            val source = inputStream.source().buffer()
+            val mockResponse = MockResponse()
+            mockResponse.setBody(source.readString(Charsets.UTF_8))
+            mockWebServer.enqueue(mockResponse)
         }
-        mockWebServer.enqueue(mockResponse.setBody(source.readString(StandardCharsets.UTF_8)))
     }
+
+    fun createService(clazz: Class<T>): T {
+        return Retrofit.Builder()
+            .baseUrl(mockWebServer.url("/"))
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(clazz)
+    }
+
 }

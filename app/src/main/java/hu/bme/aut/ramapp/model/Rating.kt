@@ -5,21 +5,23 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Rating(
-    @PrimaryKey
-    val _id: Int,
     val characterId: Int,
-    val points: Int,
+    val points: Int = 0,
     val review: String
 ) {
+    @PrimaryKey(autoGenerate = true)
+    var _id: Int = 0
 
     companion object {
 
-        fun mock() = Rating(
-            _id = 0,
-            characterId = 1,
-            points = 4,
-            review = "Wabalanadubub"
-        )
+        fun mock(): Rating{
+            val r = Rating(
+                characterId = 1,
+                points = 4,
+                review = "Wabalanadubub"
+            )
+            return r
+        }
 
     }
 

@@ -14,34 +14,13 @@ class MainRepository @Inject constructor(
 
     suspend fun getCharacters(page: Int) : List<Character>? {
         val res = characterService.getCharacters(page)
+        Log.e("ERROR", "IDEE")
         return if(res.isSuccessful){
             res.body()?.results
         } else{
             Log.e("ERROR", "Retrieving character list failed.")
-            listOf()
+            null
         }
-    }
-
-    suspend fun getCharacter(id: Int): Character? {
-        val res = characterService.getCharacter(id)
-        if(res.isSuccessful){
-            val r = characterService.getCharacter(id).body()
-            val rat = ratingDao.getRatingForCharacter(r!!._id)
-            r.rating = rat
-            if(r.episodeList.size >= 0){
-                r.firstEp = r.episodeList[0]
-            }
-            else{
-                r.firstEp = "Unknown"
-            }
-
-            return r
-        }
-        else{
-            Log.e("ERROR", "Retrieving character failed.")
-            return null
-        }
-
     }
 
     suspend fun saveRating(rating: Rating){

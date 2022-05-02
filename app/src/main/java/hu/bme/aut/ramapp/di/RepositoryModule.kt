@@ -7,7 +7,6 @@ import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 import hu.bme.aut.ramapp.network.CharacterService
 import hu.bme.aut.ramapp.persistence.dao.RatingDao
-import hu.bme.aut.ramapp.ui.main.Main
 import hu.bme.aut.ramapp.ui.main.MainRepository
 
 @Module

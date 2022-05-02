@@ -24,6 +24,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildFeatures {
+        compose = true
+    }
+
+    sourceSets {
+        test {
+            resources.srcDirs += ['src/test/resources']
+        }
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.1.1"
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -35,6 +50,22 @@ android {
 
 dependencies {
 
+    implementation "androidx.compose.compiler:compiler:1.1.1"
+    implementation "androidx.compose.ui:ui:1.1.1"
+    implementation "io.coil-kt:coil-compose:2.0.0-rc01"
+    implementation "androidx.activity:activity-compose:1.4.0"
+    implementation "androidx.compose.material:material:1.1.1"
+    implementation "androidx.compose.material:material-icons-extended:1.1.1"
+    implementation "androidx.compose.foundation:foundation:1.1.1"
+    implementation "androidx.compose.foundation:foundation-layout:1.1.1"
+    implementation "androidx.compose.animation:animation:1.1.1"
+    implementation "androidx.compose.runtime:runtime:1.1.1"
+    implementation "androidx.compose.runtime:runtime-livedata:1.1.1"
+    implementation "androidx.navigation:navigation-compose:2.5.0-beta01"
+    implementation "androidx.compose.ui:ui-tooling:1.1.1"
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.1.1"
+
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
@@ -44,6 +75,7 @@ dependencies {
     implementation "androidx.activity:activity-ktx:1.4.0"
     implementation "androidx.room:room-runtime:2.4.2"
     implementation "androidx.room:room-ktx:2.4.2"
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
     kapt "androidx.room:room-compiler:2.4.2"
     kapt "com.google.dagger:hilt-compiler:2.38.1"
 

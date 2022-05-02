@@ -15,12 +15,22 @@ data class Character(
     val location: Location,
     @SerializedName("origin")
     val origin: Origin,
-    var rating: Rating?,
-    var firstEp: String,
+    var rating: Rating = Rating(-1, 0, "No Review"),
+    var firstEp: Episode,
     @SerializedName("episode")
     val episodeList: ArrayList<String>,
+    var epListToShow: List<Episode>,
     @SerializedName("image")
     val img_url: String
+){
+    constructor() :this(0, "", "", "", Location("", ""), Origin("", ""),Rating(-1, 0, "No Review"), Episode("", ""), arrayListOf<String>(), listOf(), "")
+}
+
+data class Episode(
+    @SerializedName("name")
+    val name: String,
+    @SerializedName("episode")
+    val episode: String
 )
 
 data class Location(
