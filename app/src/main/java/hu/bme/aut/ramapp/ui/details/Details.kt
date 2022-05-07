@@ -2,6 +2,7 @@
 
 package hu.bme.aut.ramapp.ui.details
 
+import android.os.Bundle
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -38,19 +39,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
+import com.google.firebase.analytics.FirebaseAnalytics
 import hu.bme.aut.ramapp.model.Character
 import hu.bme.aut.ramapp.ui.main.CharacterListItem
 import hu.bme.aut.ramapp.ui.theme.ListTheme
 
-@Preview
-@Composable
-fun preDetails(){
-    CharacterDetails(cId = 1, model = hiltViewModel())
-}
-
 
 @Composable
-fun CharacterDetails(cId: Int?, model: DetailsViewModel){
+fun CharacterDetails(cId: Int?, model: DetailsViewModel, firebaseAnalytics: FirebaseAnalytics){
 
 
     val character: Character by model.character.observeAsState(Character())
@@ -59,8 +55,6 @@ fun CharacterDetails(cId: Int?, model: DetailsViewModel){
         model.getCharcater(cId!!)
         model.revText = character.rating.review
     }
-
-
 
     
     ListTheme(
@@ -87,11 +81,23 @@ fun CharacterDetails(cId: Int?, model: DetailsViewModel){
                                         onClick = {
                                             if (character.rating.points != i + 1) {
                                                 model.saveRating(character._id, i + 1)
+                                                val bundle = Bundle()
+                                                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, character._id.toString())
+                                                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, character.name)
+                                                bundle.putString("item_rating", character.rating.points.toString())
+                                                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Character")
+                                                firebaseAnalytics.logEvent("add_rating_to_character", bundle)
                                             }
                                         },
                                         onLongClick = {
-                                            if (character.rating.characterId != -1)
+                                            if (character.rating.characterId != -1){
                                                 model.delWithClear(character._id)
+                                                val bundle = Bundle()
+                                                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, character._id.toString())
+                                                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, character.name)
+                                                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Character")
+                                                firebaseAnalytics.logEvent("delete_rating_to_character", bundle)
+                                            }
                                         }
                                     )
                                 )
@@ -104,11 +110,23 @@ fun CharacterDetails(cId: Int?, model: DetailsViewModel){
                                             onClick = {
                                                 if (character.rating.points != i + 1) {
                                                     model.saveRating(character._id, i + 1)
+                                                    val bundle = Bundle()
+                                                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, character._id.toString())
+                                                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, character.name)
+                                                    bundle.putString("item_rating", character.rating.points.toString())
+                                                    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Character")
+                                                    firebaseAnalytics.logEvent("add_rating_to_character", bundle)
                                                 }
                                             },
                                             onLongClick = {
-                                                if (character.rating.characterId != -1)
+                                                if (character.rating.characterId != -1) {
                                                     model.delWithClear(character._id)
+                                                    val bundle = Bundle()
+                                                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, character._id.toString())
+                                                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, character.name)
+                                                    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Character")
+                                                    firebaseAnalytics.logEvent("delete_rating_to_character", bundle)
+                                                }
                                             }
                                         )
                                 )

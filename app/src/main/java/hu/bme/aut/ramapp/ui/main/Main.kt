@@ -1,5 +1,6 @@
 package hu.bme.aut.ramapp.ui.main
 
+import android.os.Bundle
 import androidx.compose.compiler.plugins.kotlin.EmptyFunctionMetrics.composable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,28 +30,29 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import coil.compose.rememberAsyncImagePainter
+import com.google.firebase.analytics.FirebaseAnalytics
 import hu.bme.aut.ramapp.model.Character
 import hu.bme.aut.ramapp.ui.details.CharacterDetails
 import hu.bme.aut.ramapp.ui.theme.ListTheme
 import hu.bme.aut.ramapp.ui.theme.lightGray
 
 @Composable
-fun NavFun(){
+fun NavFun(firebaseAnalytics: FirebaseAnalytics){
 
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "characterlist") {
-        composable("characterlist") { MainScreen(navController) }
+        composable("characterlist") { MainScreen(navController, firebaseAnalytics) }
         composable("characterdetails/{cId}",
             arguments = listOf(navArgument("cId") {type = NavType.IntType})) {
-            CharacterDetails(it.arguments?.getInt("cId"), hiltViewModel())
+            CharacterDetails(it.arguments?.getInt("cId"), hiltViewModel(), firebaseAnalytics)
         }
     }
 
 }
 
 @Composable
-fun MainScreen(navController: NavController, model: MainViewModel = hiltViewModel()){
+fun MainScreen(navController: NavController, firebaseAnalytics: FirebaseAnalytics, model: MainViewModel = hiltViewModel()){
 
     LaunchedEffect(key1 = ""){
         model.loadFirstPage()
@@ -66,13 +68,18 @@ fun MainScreen(navController: NavController, model: MainViewModel = hiltViewMode
                     items(
                         items = characterList,
                         itemContent = {
-                            CharacterListItem(navController, character = it)
+                            CharacterListItem(navController, character = it, firebaseAnalytics)
                         }
                     )
                 }
                 Button(
                     modifier = Modifier.align(Alignment.CenterHorizontally),
-                    onClick = { model.loadNextCharacters() }) {
+                    onClick = {
+                        model.loadNextCharacters()
+                        val bundle = Bundle()
+                        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Next Page Button");
+                        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+                    }) {
                     Text(text = "Next Page",
                         color = Color.White)
                 }
@@ -80,7 +87,7 @@ fun MainScreen(navController: NavController, model: MainViewModel = hiltViewMode
 }
 
 @Composable
-fun CharacterListItem(navController: NavController, character: Character){
+fun CharacterListItem(navController: NavController, character: Character, firebaseAnalytics: FirebaseAnalytics){
 
     Card(
         modifier = Modifier
@@ -91,6 +98,11 @@ fun CharacterListItem(navController: NavController, character: Character){
         shape = RoundedCornerShape(corner = CornerSize(16.dp))
     ) {
         Row(Modifier.clickable {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, character._id.toString());
+            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, character.name);
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Character");
+            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
             navController.navigate("characterdetails/${character._id}")
         }) {
             Image(

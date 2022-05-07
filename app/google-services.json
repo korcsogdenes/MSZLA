@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "4171237873",
+    "project_id": "ramapp-e37aa",
+    "storage_bucket": "ramapp-e37aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:4171237873:android:9a8df955ac2396b21c9c50",
+        "android_client_info": {
+          "package_name": "hu.bme.aut.ramapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "4171237873-eo7tfgb8hc16pcv2chlvcq478b2kslvs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAT_-lp_gRZHOH0EXpoHHyA0anqflHrd6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "4171237873-eo7tfgb8hc16pcv2chlvcq478b2kslvs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

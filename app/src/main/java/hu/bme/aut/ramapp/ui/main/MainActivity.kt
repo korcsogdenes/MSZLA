@@ -9,6 +9,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
+import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 import hu.bme.aut.ramapp.ui.theme.ListTheme
 
@@ -16,9 +17,14 @@ import hu.bme.aut.ramapp.ui.theme.ListTheme
 class MainActivity : ComponentActivity() {
 
     private val viewModel: MainViewModel by viewModels()
+    lateinit var mFirebaseAnalytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
+
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, null)
 
         //viewModel.testApiAll()
         //viewModel.testDbInsert(1,2, 1, "TesztRev1")
@@ -30,7 +36,7 @@ class MainActivity : ComponentActivity() {
             ListTheme (
                 content = {
                     Surface{
-                        NavFun()
+                        NavFun(mFirebaseAnalytics)
                     }
                 }
             )

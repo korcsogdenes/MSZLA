@@ -44,6 +44,7 @@ class DetailsViewModel @Inject constructor(
     fun clearRating(){
         val tmpChar = character.value?.copy()
         tmpChar?.rating = Rating(-1, 0, "No Review")
+        revText = "No Review"
         character.value = tmpChar
     }
 
