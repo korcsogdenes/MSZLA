@@ -84,7 +84,7 @@ fun CharacterDetails(cId: Int?, model: DetailsViewModel, firebaseAnalytics: Fire
                                                 val bundle = Bundle()
                                                 bundle.putString(FirebaseAnalytics.Param.ITEM_ID, character._id.toString())
                                                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, character.name)
-                                                bundle.putString("item_rating", character.rating.points.toString())
+                                                bundle.putString("item_rating", (i + 1).toString())
                                                 bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Character")
                                                 firebaseAnalytics.logEvent("add_rating_to_character", bundle)
                                             }
@@ -113,7 +113,7 @@ fun CharacterDetails(cId: Int?, model: DetailsViewModel, firebaseAnalytics: Fire
                                                     val bundle = Bundle()
                                                     bundle.putString(FirebaseAnalytics.Param.ITEM_ID, character._id.toString())
                                                     bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, character.name)
-                                                    bundle.putString("item_rating", character.rating.points.toString())
+                                                    bundle.putString("item_rating", (i + 1).toString())
                                                     bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Character")
                                                     firebaseAnalytics.logEvent("add_rating_to_character", bundle)
                                                 }

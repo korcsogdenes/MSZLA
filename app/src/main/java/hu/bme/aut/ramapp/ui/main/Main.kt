@@ -35,6 +35,7 @@ import hu.bme.aut.ramapp.model.Character
 import hu.bme.aut.ramapp.ui.details.CharacterDetails
 import hu.bme.aut.ramapp.ui.theme.ListTheme
 import hu.bme.aut.ramapp.ui.theme.lightGray
+import java.lang.RuntimeException
 
 @Composable
 fun NavFun(firebaseAnalytics: FirebaseAnalytics){
@@ -75,10 +76,13 @@ fun MainScreen(navController: NavController, firebaseAnalytics: FirebaseAnalytic
                 Button(
                     modifier = Modifier.align(Alignment.CenterHorizontally),
                     onClick = {
-                        model.loadNextCharacters()
+
+                        throw RuntimeException("Test Crash")
+
+                        /*model.loadNextCharacters()
                         val bundle = Bundle()
                         bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Next Page Button");
-                        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+                        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)*/
                     }) {
                     Text(text = "Next Page",
                         color = Color.White)
